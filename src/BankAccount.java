@@ -43,7 +43,10 @@ public class BankAccount {
 		accBal += amount; //Makes deposit 
 		Transaction transaction = new Transaction( accNumber, "Deposit", amount);
 		trans.add(transaction);//Adding trans with associated index
-
+		
+			Bank.calcTotalAmt(accBal);
+		
+System.out.print(Bank.getTotalAmt() + "HEEEEEEEEEEREE");
 	}
 
 	public boolean makeWithdrawal(int accNumber, double amt) {
@@ -110,6 +113,7 @@ public class BankAccount {
 	//Sets account balance 
 	public void setAccBal(double bal)
 	{
+		
 		accBal = bal;
 	}
 	//Gets account balance

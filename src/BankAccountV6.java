@@ -1,4 +1,4 @@
-	//NAME: Mark Goldstein
+//NAME: Mark Goldstein
 	/**
 	 * @author Mark Goldstein
 	 * @version 0.04

@@ -11,33 +11,12 @@ public class Bank {
 	private static double totalAmountInAllAccts ;
 	
 	
-public static void addTotalSav(double a) {
-	totalAmountInSavingsAccts += a;
-}
-
-public static void addTotalCheckings(double a) {
-	totalAmountInCheckingAccts += a;
-}
-public static void addTotalCD(double a) {
-	totalAmountInCDAccts += a;
+public static void calcTotalAmt(double a) {
+	totalAmountInAllAccts = a +  totalAmountInCDAccts + totalAmountInCheckingAccts +totalAmountInSavingsAccts; 
 	
 }
-public static void addTotalAll(double a) {
-	totalAmountInAllAccts+= a;
-}
-public static void subTotalSav(double a) {
-	totalAmountInSavingsAccts -= a;
-
-}
-public static void subTotalCheckings(double a) {
-	totalAmountInCheckingAccts -= a;
-}
-public static void subTotalCD(double a) {
-	totalAmountInCDAccts -= a;
-	
-}
-public static void subTotalAll(double a) {
-	totalAmountInAllAccts-= a;
+public static double  getTotalAmt() {
+return totalAmountInAllAccts;
 }
 	
 	private  ArrayList <BankAccount> bankAccList ;
