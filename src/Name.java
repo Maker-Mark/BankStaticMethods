@@ -17,6 +17,18 @@ public class Name {
 		last = lastName;
 		first = firstName;	
 	}
+	//Copy constructor
+	public Name (Name n) {
+		last = n.last;
+		first = n.first;
+	}
+	
+	public String toString() {
+		String accString;
+		accString = String.format("%-10s %-10s" , first, last );
+		return accString;
+	}
+
 	//Setters and Getters for first and last name
 	public void setFirst (String f)
 	{
@@ -33,6 +45,9 @@ public class Name {
 	public String getLast()
 	{
 		return last;
+	}
+	public boolean equals(Name name) {
+		return (first.equals(name.first) &&  (last.equals(name.last)));
 	}
 }
 

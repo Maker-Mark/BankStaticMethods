@@ -3,7 +3,7 @@
  */
 public class Depositor {
 	//data members of Depositor object
-	private Name nameOnAcc = new Name(); 
+	private Name nameOnAcc; 
 	private String socSec;
 
 	//Default constructor for Depositor
@@ -18,6 +18,20 @@ public class Depositor {
 		nameOnAcc = new Name(first, last);
 		socSec = soc;
 	}
+	
+	
+	//copy Constructor
+	public Depositor (Depositor d) {
+		socSec = d.socSec;
+		nameOnAcc = new Name (d.nameOnAcc);
+	}
+	
+	public String toString() {
+		String accString;
+		accString = String.format(nameOnAcc + " %-16s" , socSec );
+		return accString;
+	}
+
 
 	//Social security setter
 	public void setSocSec(String s) 
@@ -42,5 +56,10 @@ public class Depositor {
 	{
 		return nameOnAcc;
 	}
-
+	
+	public boolean equals (Depositor dep) {
+		return socSec.equals(dep.socSec);
+}
+	
+	
 }

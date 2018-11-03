@@ -11,8 +11,6 @@
 	import java.util.ArrayList;
 
 public class BankAccountV6 {
-
-
 	
 
 
@@ -33,8 +31,8 @@ public class BankAccountV6 {
 			//				Scanner kybd = new Scanner(System.in);
 
 			// open the output file
-			PrintWriter outFile = new PrintWriter("myoutput.txt");
-			//		PrintWriter outFile = new PrintWriter(System.out);
+//			PrintWriter outFile = new PrintWriter("myoutput.txt");
+					PrintWriter outFile = new PrintWriter(System.out);
 			boolean trans = true;
 			/* fill and print initial database */
 			readAccts(bank);
@@ -201,8 +199,8 @@ public class BankAccountV6 {
 			BankAccount myBankAcc = new BankAccount();
 
 			outFile.println("\t\t\t\t\t\tDatabase of Bank Accounts\n");
-			outFile.printf("First \t   Last\t    Social Security#    Account#"
-					+ "\tAccount Type   Balance \t  Status \n \n");
+			outFile.printf("First \t   Last       Social Security# Account#"
+					+ "\t  Account Type   Balance     Status \n \n");
 			outFile.println("/---------------------------------------------"
 					+ "------------------------------------------\\");
 
@@ -212,36 +210,31 @@ public class BankAccountV6 {
 				outFile.println();
 				myBankAcc = bank.getAcct(index);
 				myName = myBankAcc.getAccDet().getNameOnAcc();
-				outFile.printf("%-11s", myName.getFirst());
-				outFile.printf("%-16s", myName.getLast());
-				outFile.printf("%-17s",myBankAcc.getAccDet().getSocSec());
-				outFile.printf("%-13s", myBankAcc.getAccNum());
-				outFile.printf("%-14s", myBankAcc.getAccType());
-				outFile.printf("$%7.2f", myBankAcc.getAccBal());
-				outFile.printf("%8s", myBankAcc.getStatus());
-				outFile.println();
+//				outFile.printf("%-11s", myName.getFirst());
+//				outFile.printf("%-16s", myName.getLast());
+//				outFile.printf("%-17s",myBankAcc.getAccDet().getSocSec());
+//				outFile.printf("%-13s", myBankAcc.getAccNum());
+//				outFile.printf("%-14s", myBankAcc.getAccType());
+//				outFile.printf("$%7.2f", myBankAcc.getAccBal());
+//				outFile.printf("%8s", myBankAcc.getStatus());
+				outFile.println( myBankAcc);
+		
 
 
-				outFile.println();
 
 				if (trans){
 
-					outFile.printf("Transaction History for Account Number " +
-							myBankAcc.getAccNum() +": \n" );
+					outFile.printf(" \nTransaction History for Account Number " +
+							myBankAcc.getAccNum() +": \n\n" );
 
 					ArrayList <Transaction> transaction = new ArrayList<Transaction>();
 					transaction = myBankAcc.getTransactions(myBankAcc,
 							myBankAcc.getAccNum());
 
 					for(int i = 0; i < myBankAcc.getNumTrans() ;  i++ ) {	
-						outFile.printf(" %s ",  transaction.get(i).getTransType());
-						if ( transaction.get(i).getTransAmt() >= 0) {
-							outFile.printf( "$%.2f ", transaction.get(i).getTransAmt());
-						}						
-						outFile.println();
+						outFile.printf("%s%n",  transaction.get(i).toString());				
 					}
 				}
-				outFile.println();
 
 				outFile.println("\\--------------------------------------------------"
 						+ "-------------------------------------/");
