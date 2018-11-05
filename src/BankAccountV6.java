@@ -209,7 +209,7 @@ public class BankAccountV6 {
 			for (int index = 0; index < bank.getNumAcc(); index++) {
 				outFile.println();
 				myBankAcc = bank.getAcct(index);
-				myName = myBankAcc.getAccDet().getNameOnAcc();
+//				myName = myBankAcc.getAccDet().getNameOnAcc();
 //				outFile.printf("%-11s", myName.getFirst());
 //				outFile.printf("%-16s", myName.getLast());
 //				outFile.printf("%-17s",myBankAcc.getAccDet().getSocSec());
