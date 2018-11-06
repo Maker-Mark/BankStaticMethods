@@ -204,14 +204,10 @@ public class BankAccountV6 {
 			outFile.println("/---------------------------------------------"
 					+ "------------------------------------------\\");
 
-
-
 			for (int index = 0; index < bank.getNumAcc(); index++) {
 				outFile.println();
 				myBankAcc = bank.getAcct(index);
 				outFile.println( myBankAcc);
-	
-
 				if (trans){
 
 					outFile.printf(" \nTransaction History for Account Number " +

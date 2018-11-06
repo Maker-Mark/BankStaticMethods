@@ -17,10 +17,17 @@ public class Name {
 		last = lastName;
 		first = firstName;	
 	}
+	
+	
 	//Copy constructor
 	public Name (Name n) {
 		last = n.last;
 		first = n.first;
+	}
+	
+	public Name getNameCopy() {
+		Name nameCopy = new Name(first, last);
+		return nameCopy;
 	}
 	
 	public String toString() {

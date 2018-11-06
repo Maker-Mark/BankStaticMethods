@@ -26,6 +26,11 @@ public class Depositor {
 		nameOnAcc = new Name (d.nameOnAcc);
 	}
 	
+	public Depositor getCopyDep() {
+		Depositor depCopy = new Depositor(nameOnAcc.getFirst(),nameOnAcc.getLast(), socSec);
+		return depCopy;
+	}
+	
 	public String toString() {
 		String accString;
 		accString = String.format(nameOnAcc + " %-16s" , socSec );

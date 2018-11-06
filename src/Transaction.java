@@ -15,7 +15,7 @@ public class Transaction {
 		type = typeGiven;
 		amount = amt;
 	}
-	
+	//Copy constructor
 	public Transaction(Transaction t) {
 		type = t.type;
 		accNum = t.accNum;
@@ -28,6 +28,12 @@ public class Transaction {
 		accNum = accountNum;
 		type = typeGiven;
 		amount = 0;	//Set amount flag for non-amount transaction
+	}
+	
+	//Getter for a copy of transaction
+	public Transaction copyTrans() {
+		Transaction copT = new Transaction(accNum, type, amount);
+		return copT;
 	}
 	
 	

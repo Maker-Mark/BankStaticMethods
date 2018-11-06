@@ -5,12 +5,12 @@ import java.util.ArrayList;
 
 public class BankAccount {
 	//data members of BankAccount object
-	private Depositor accDet = new Depositor();
+	private Depositor accDet ;
 	private int accNum;
 	private String accType;
 	private String status  = "Open";
 	private double accBal;
-	private ArrayList<Transaction> trans = new ArrayList<>()  ;
+	private ArrayList<Transaction> trans ;
 
 	//Default constructor
 	public BankAccount()
@@ -39,8 +39,30 @@ public class BankAccount {
 		Transaction transaction = new Transaction (accountNum, "Open Account", bal);
 		trans.add(transaction);
 	}
-
-
+	
+	//Constructor for bank account to be copy
+	//Do i need this or just use the CopyConst
+	public BankAccount(Depositor d , int n,  String t,String s,
+			double b, ArrayList<Transaction> arl)
+	{
+		status = s;
+		accDet = new Depositor(d);
+		accType = t;
+		accNum = n;
+		accBal = b;
+		trans = new ArrayList <Transaction>();
+		for(int i =0; i < trans.size();i++) {
+			trans.add(new Transaction(trans.get(i)));
+	}
+	}
+	
+//Gets a copy of bank account with new address 
+	public BankAccount getAccCopy () {
+		BankAccount bankCopy = new BankAccount(accDet, accNum,
+				accType, status, accBal, trans);
+		return bankCopy;
+	}
+	
 	//Copy constructor 
 	public BankAccount (BankAccount b) {
 
@@ -55,7 +77,7 @@ public class BankAccount {
 
 		}
 	}
-
+	
 	public String toString() {
 		String accString;
 		accString = String.format(accDet +" %-10d %-14s %-7.2f %8s" , accNum, accType,  accBal, status );
@@ -89,8 +111,7 @@ public class BankAccount {
 		}
 
 	}
-
-
+	
 	public boolean equals(BankAccount acc, boolean b) 
 	{
 		// if we want to compare accNum
