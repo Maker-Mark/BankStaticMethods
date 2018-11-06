@@ -27,7 +27,8 @@ public class Depositor {
 	}
 	
 	public Depositor getCopyDep() {
-		return new Depositor(nameOnAcc.getFirst(),nameOnAcc.getLast(), socSec);
+		Depositor depCopy = new Depositor(nameOnAcc.getFirst(),nameOnAcc.getLast(), socSec);
+		return depCopy;
 	}
 	
 	public String toString() {
@@ -58,7 +59,7 @@ public class Depositor {
 	}
 	public Name getNameOnAcc()
 	{
-		return new Name (nameOnAcc);
+		return nameOnAcc;
 	}
 	
 	public boolean equals (Depositor dep) {

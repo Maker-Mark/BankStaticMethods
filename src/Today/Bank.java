@@ -9,36 +9,17 @@ public class Bank {
 	private static double totalAmountInCheckingAccts ;
 	private static double totalAmountInCDAccts ;
 	private static double totalAmountInAllAccts ;
-	//Allows the addtion and subtraction of totals 
-	public static void setTotSav(double d) {
-		totalAmountInSavingsAccts += d;
-	}
-	public static void setTotCh(double d) {
-		totalAmountInCheckingAccts += d;
-	}
-	public static void  setTotCD(double d) {
-		totalAmountInCDAccts += d;
-	}
-	
-	public static double getTotalAmt() {
-		return (totalAmountInCDAccts + totalAmountInCheckingAccts + totalAmountInSavingsAccts); 
-	}
-	
-	public static double getTotCD()
-	{
-		return totalAmountInCDAccts;
-	}
-	public static double getTotSav()
-	{
-		return totalAmountInSavingsAccts;
-	}
-	public static double getTotCh()
-	{
-		return totalAmountInCheckingAccts;
-	}
 	
 	
-
+public static void calcTotalAmt(double a) {
+	totalAmountInAllAccts = a +  totalAmountInCDAccts 
+			+ totalAmountInCheckingAccts +totalAmountInSavingsAccts; 
+	
+}
+public static double  getTotalAmt() {
+return totalAmountInAllAccts;
+}
+	
 	private  ArrayList <BankAccount> bankAccList ;
 
 	//Default constructor for creating bank account
@@ -46,7 +27,7 @@ public class Bank {
 	{
 		bankAccList = new ArrayList<BankAccount>();
 	}
-	
+
 	/*
 	 *Opens new account when being sent an account number and 
 	 *Bank Account object
@@ -130,25 +111,23 @@ public class Bank {
 		}
 	}
 
-
-	
 	public BankAccount getAcct(int index)
 	{			
-		return  new BankAccount (bankAccList.get(index)); // new BankAccoun
+		return bankAccList.get(index);
 	}
-	
 	//Gets account
 	public  BankAccount getAcct(String social)
 	{
 		int index = findAcctSSN(social) ;
 		System.out.println(index);
 		System.out.println(bankAccList.size());
-		return  (bankAccList.get(index));// Uses Copy Cons new BankAccount
+		return bankAccList.get(index);
 	}
 
 
 	public void setAcct( int index, BankAccount acct)
 	{
+
 		// Set account at index of accounts arraylist to account
 		bankAccList.set(index, acct);
 	}

@@ -1,6 +1,6 @@
 
 public class Transaction {
-
+	private int accNum;
 	private String type;
 	private double amount;
 
@@ -10,30 +10,31 @@ public class Transaction {
 		amount = 0;
 	}
 	//Constructor given account number, type and amount
-	public Transaction( String typeGiven, double amt) {
-		
+	public Transaction(int accountNum, String typeGiven, double amt) {
+		accNum = accountNum;
 		type = typeGiven;
 		amount = amt;
 	}
 	//Copy constructor
 	public Transaction(Transaction t) {
 		type = t.type;
-		
+		accNum = t.accNum;
 		amount = t.amount;
 	}
 	
 	//Constructor given account number and type only to allow
 	// removal of amount with no amount 
 	public Transaction(int accountNum, String typeGiven) {
-		
+		accNum = accountNum;
 		type = typeGiven;
 		amount = 0;	//Set amount flag for non-amount transaction
 	}
 	
 	//Getter for a copy of transaction
-//	public Transaction getCopy() {
-//		return new Transaction(accNum, type, amount);
-//	}
+	public Transaction getCopy() {
+		Transaction copT = new Transaction(accNum, type, amount);
+		return copT;
+	}
 	
 	
 	public String toString() {
@@ -43,7 +44,9 @@ public class Transaction {
 	}
 
 	//Gets transaction account number
-
+	public int getTransAcc(){
+		return accNum;
+	}
 	//Sets transaction type
 	public void setTransType(String givenType) {
 		type = givenType;

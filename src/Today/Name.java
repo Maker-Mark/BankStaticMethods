@@ -26,7 +26,8 @@ public class Name {
 	}
 	
 	public Name getNameCopy() {
-		return new Name(first, last);
+		Name nameCopy = new Name(first, last);
+		return nameCopy;
 	}
 	
 	public String toString() {

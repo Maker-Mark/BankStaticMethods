@@ -10,18 +10,17 @@ public class BankAccount {
 	private String accType;
 	private String status  = "Open";
 	private double accBal;
-	private ArrayList<Transaction> trans  ;
+	private ArrayList<Transaction> trans = new ArrayList <Transaction> () ;
 
 	//Default constructor
 	public BankAccount()
 	{
-		trans = new ArrayList <Transaction>();
 		accDet = new Depositor();
 		accNum = 0;
 		accType = "none";
 		accBal = 0.00;
 		status  = "Open";
-		Transaction transaction = new Transaction ("Default", accBal);
+		Transaction transaction = new Transaction (accNum, "Default", accBal);
 		trans.add(transaction);
 	}
 
@@ -29,7 +28,6 @@ public class BankAccount {
 	public BankAccount(String first, String last, String social,int accountNum,
 			String type, double bal)
 	{
-		trans = new ArrayList <Transaction>();
 		accNum = accountNum;
 		accType = type;
 		accBal= bal;
@@ -38,45 +36,36 @@ public class BankAccount {
 		last = accDet.getNameOnAcc().getLast();
 		social= accDet.getSocSec();
 		status  = "Open";
-		Transaction transaction = new Transaction ( "Open Account", bal);
+		Transaction transaction = new Transaction (accountNum, "Open Account", bal);
 		trans.add(transaction);
-		//		Bank.calcTotalAmt(bal);
+		Bank.calcTotalAmt(bal);
 
 	}
-
+	
 	//Constructor for bank account to be copy
 	//Do i need this or just use the CopyConst
-//	public BankAccount(Depositor d , int n,  String t,String s,
-//			double b, ArrayList<Transaction> arl)
-//	{
-//		status = s;
-//		accDet = new Depositor(d);
-//		accType = t;
-//		accNum = n;
-//		accBal = b;
-//		trans = new ArrayList <Transaction>();
-//		for(int i =0; i < trans.size();i++) {
-//			trans.add(new Transaction(trans.get(i)));
-//		}
-//	}
-//	//Gets a copy of bank account with new address 
-//		public BankAccount getAccCopy () {
-//			return new BankAccount(accDet, accNum, accType,
-//					status, accBal, trans);
-//		}
-
-	public void clacAmountType() {
-		if (accType.equalsIgnoreCase("CD")) {
-			Bank.setTotCD(accBal);
-		} else if (accType.equalsIgnoreCase("Savings")){
-			Bank.setTotSav(accBal);
-		} else if (accType.equalsIgnoreCase("Checkings")){
-			Bank.setTotCh(accBal);	
-		}
+	public BankAccount(Depositor d , int n,  String t,String s,
+			double b, ArrayList<Transaction> arl)
+	{
+		status = s;
+		accDet = new Depositor(d);
+		accType = t;
+		accNum = n;
+		accBal = b;
+		trans = new ArrayList <Transaction>();
+		for(int i =0; i < trans.size();i++) {
+			trans.add(new Transaction(trans.get(i)));
 	}
 
+	}
 	
-
+//Gets a copy of bank account with new address 
+	public BankAccount getAccCopy () {
+		BankAccount bankCopy = new BankAccount(accDet, accNum,
+				accType, status, accBal, trans);
+		return bankCopy;
+	}
+	
 	//Copy constructor 
 	public BankAccount (BankAccount b) {
 
@@ -87,11 +76,11 @@ public class BankAccount {
 		accBal = b.accBal;
 		trans = new ArrayList <Transaction>();
 		for(int i =0; i < b.trans.size();i++) {
-			trans.add(new Transaction (b.trans.get(i)));
+			trans.add(new Transaction(b.trans.get(i)));
 
 		}
 	}
-
+	
 	public String toString() {
 		String accString;
 		accString = String.format(accDet +" %-10d %-14s %-7.2f %8s" , accNum,
@@ -101,19 +90,19 @@ public class BankAccount {
 	}
 	public void makeDeposit(int accNumber, int index, double amount) {
 		accBal += amount; //Makes deposit 
-
-		Transaction transaction = new Transaction(  "Deposit", amount);
+		
+		Transaction transaction = new Transaction( accNumber, "Deposit", amount);
 		trans.add(transaction);//Adding trans with associated index
-		clacAmountType();// Calculates the amount and type of account
-
+//		Bank.calcTotalAmt(accBal);
+		Bank.calcTotalAmt(amount);
 	}
 
 	public boolean makeWithdrawal(int accNumber, double amt) {
 		if( amt >= 0) {
 			accBal -= amt; //Makes withdrawal 
-			Transaction transaction = new Transaction( "Withdrawal", amt);
+			Transaction transaction = new Transaction(accNumber, "Withdrawal", amt);
 			trans.add(transaction);
-			clacAmountType();
+//			Bank.calcTotalAmt(-amt);									// IS THIS OK?
 			return true;
 		}else {
 			return false; // message for less than
@@ -127,8 +116,9 @@ public class BankAccount {
 		} else {
 			return -1;
 		}
-	}
 
+	}
+	
 	public boolean equals(BankAccount acc, boolean b) 
 	{
 		// if we want to compare accNum
@@ -142,23 +132,22 @@ public class BankAccount {
 
 
 	//Gets arraylist of transactions attached to account
-	public  ArrayList<Transaction>  getTransactions()
+	public  ArrayList<Transaction>  getTransactions(BankAccount bankAcc, int accNum)
 	{
 		return trans ;
 	}
-	
 
 	//Adds transaction given account object and type of transaction and account number
 
 	public void addTransaction(BankAccount bankAcc, String type, double amount) {
-//		Transaction transaction = new Transaction (bankAcc.getAccNum(), type, amount);
-		trans.add( new Transaction (type, amount));
+		Transaction transaction = new Transaction (bankAcc.getAccNum(), type, amount);
+		trans.add( transaction);
 
 	}
 	//Adds transaction given account object and type of transaction 
 	public void addTransaction(BankAccount bankAcc, String type) {
 		Transaction transaction = new Transaction (bankAcc.getAccNum(), type);
-		trans.add(transaction);
+		trans.add( transaction);
 
 	}
 
@@ -215,7 +204,7 @@ public class BankAccount {
 	//Gets account depositor
 	public Depositor getAccDet()
 	{
-		return (accDet); //new Depositor 
+		return accDet;
 	}
 	//Gets number of transactions 
 	public int getNumTrans() {
