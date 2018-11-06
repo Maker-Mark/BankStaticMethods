@@ -209,18 +209,8 @@ public class BankAccountV6 {
 			for (int index = 0; index < bank.getNumAcc(); index++) {
 				outFile.println();
 				myBankAcc = bank.getAcct(index);
-//				myName = myBankAcc.getAccDet().getNameOnAcc();
-//				outFile.printf("%-11s", myName.getFirst());
-//				outFile.printf("%-16s", myName.getLast());
-//				outFile.printf("%-17s",myBankAcc.getAccDet().getSocSec());
-//				outFile.printf("%-13s", myBankAcc.getAccNum());
-//				outFile.printf("%-14s", myBankAcc.getAccType());
-//				outFile.printf("$%7.2f", myBankAcc.getAccBal());
-//				outFile.printf("%8s", myBankAcc.getStatus());
 				outFile.println( myBankAcc);
-		
-
-
+	
 
 				if (trans){
 
@@ -231,13 +221,17 @@ public class BankAccountV6 {
 					transaction = myBankAcc.getTransactions(myBankAcc,
 							myBankAcc.getAccNum());
 
-					for(int i = 0; i < myBankAcc.getNumTrans() ;  i++ ) {	
-						outFile.printf("%s%n",  transaction.get(i).toString());				
+					for(int i = 0; i < myBankAcc.getNumTrans() ;  i++ ) {
+						//Prints Transactions using auto-toString
+						outFile.printf("%s%n",  transaction.get(i));				
 					}
+					
 				}
 
 				outFile.println("\\--------------------------------------------------"
 						+ "-------------------------------------/");
+				outFile.println("Total Amount in Bank:$" + Bank.getTotalAmt());
+				
 			}
 			// Flushes the output file
 			outFile.flush();
@@ -317,21 +311,24 @@ public class BankAccountV6 {
 					outFile.println("Transaction Requested: Account Information");
 					outFile.print("Sucessfully found account linked to SS# \"" 
 							+ tempInput+ "\" below:\n\n");
-					outFile.printf("First \t   Last\t    Social Security#    Account#"
-							+ "\tAccount Type   Balance \t  Status \n");
-					outFile.println("/--------------------------------------------"
-							+ "-------------------------------------------\\");
-					outFile.printf("%-11s", bank.getAcct((temp)).
-							getAccDet().getNameOnAcc()
-							.getFirst());
-					outFile.printf("%-16s", bank.getAcct(temp).getAccDet().getNameOnAcc()
-							.getLast());
-					outFile.printf("%-17s", bank.getAcct(temp).getAccDet().getSocSec());
-					outFile.printf("%-13s", bank.getAcct(temp).getAccNum());
-					outFile.printf("%-14s", bank.getAcct(temp).getAccType());
-					outFile.printf("$%7.2f ", bank.getAcct(temp).getAccBal());
-					outFile.printf("%8s \n", bank.getAcct(temp).getStatus());
-
+					outFile.printf("First \t   Last       Social Security# Account#"
+							+ "\t  Account Type   Balance     Status \n \n");
+					outFile.println("/---------------------------------------------"
+							+ "------------------------------------------\\");
+					outFile.printf("%s%n", bank.getAcct((temp)));
+					
+					
+//					outFile.printf("%-11s", bank.getAcct((temp)).
+//							getAccDet().getNameOnAcc()
+//							.getFirst());
+//					outFile.printf("%-16s", bank.getAcct(temp).getAccDet().getNameOnAcc()
+//							.getLast());
+//					outFile.printf("%-17s", bank.getAcct(temp).getAccDet().getSocSec());
+//					outFile.printf("%-13s", bank.getAcct(temp).getAccNum());
+//					outFile.printf("%-14s", bank.getAcct(temp).getAccType());
+//					outFile.printf("$%7.2f ", bank.getAcct(temp).getAccBal());
+//					outFile.printf("%8s \n", bank.getAcct(temp).getStatus());
+//
 					outFile.printf("Transaction History for Account Number " +
 							bank.getAcct(temp).getAccNum() +": \n" );
 

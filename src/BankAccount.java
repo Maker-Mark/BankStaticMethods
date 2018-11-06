@@ -66,7 +66,6 @@ public class BankAccount {
 		accBal += amount; //Makes deposit 
 		Transaction transaction = new Transaction( accNumber, "Deposit", amount);
 		trans.add(transaction);//Adding trans with associated index
-
 		Bank.calcTotalAmt(accBal);
 	}
 
