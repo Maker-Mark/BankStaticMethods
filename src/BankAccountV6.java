@@ -1,8 +1,8 @@
 //NAME: Mark Goldstein
 /**
  * @author Mark Goldstein
- * @version 0.04
- * @date 10/22/2018
+ * @version 0.06
+ * @date 11/7/2018
  * 
  */
 import java.io.*;
@@ -13,10 +13,8 @@ import java.util.ArrayList;
 public class BankAccountV6 {
 
 
-
 	public static void main(String[] args) throws IOException {
 		// constant definitions
-
 		char choice; // menu item selected
 		boolean not_done = true; // loop control flag
 
@@ -31,8 +29,8 @@ public class BankAccountV6 {
 		//				Scanner kybd = new Scanner(System.in);
 
 		// open the output file
-		//			PrintWriter outFile = new PrintWriter("myoutput.txt");
-		PrintWriter outFile = new PrintWriter(System.out);
+		PrintWriter outFile = new PrintWriter("myoutput.txt");
+		//PrintWriter outFile = new PrintWriter(System.out);
 		boolean trans = true;
 		/* fill and print initial database */
 		readAccts(bank);
@@ -202,25 +200,21 @@ public class BankAccountV6 {
 
 		outFile.println("\t\t\t\t\t\tDatabase of Bank Accounts\n");
 		outFile.printf("First \t   Last       Social Security# Account#"
-				+ "\t  Account Type   Balance     Status \n \n");
-		outFile.println("/---------------------------------------------"
+				+ "\t  Account Type   Balance    Status \n \n");
+		outFile.println("/---------------------------------------"
 				+ "------------------------------------------\\");
-
-
-
 		for (int index = 0; index < bank.getNumAcc(); index++) {
-			outFile.println();
 			myBankAcc = bank.getAcct(index);
 			outFile.println( myBankAcc);
 			if (trans){
 
-				outFile.printf(" \nTransaction History for Account Number " +
-						myBankAcc.getAccNum() +": \n\n" );
+				outFile.printf(" \nTransaction History:  \n" );
 
 				ArrayList <Transaction> transaction = new ArrayList<Transaction>();
 
 				for(int i = 0 ; i < myBankAcc.getTransactions().size(); i++) {
-					transaction.add(new Transaction(myBankAcc.getTransactions().get(i)));
+					transaction.add(
+							new Transaction(myBankAcc.getTransactions().get(i)));
 
 				}
 				for(int i = 0; i < myBankAcc.getNumTrans() ;  i++ ) {
@@ -230,22 +224,16 @@ public class BankAccountV6 {
 
 			}
 
-			outFile.println("\\--------------------------------------------------"
-					+ "-------------------------------------/");
-			outFile.println("Total in CD:" + Bank.getTotCD()) ;
-			outFile.printf("Total in Savings:$%.2f%n" , Bank.getTotSav());
-			outFile.println("Total in Checkings:" + Bank.getTotCh()) ;
-
-			outFile.println("Total Amount in Bank:$" + Bank.getTotalAmt());
-
+			outFile.println("\\---------------------------------------"
+					+ "------------------------------------------/");
 		}
-		// Flushes the output file
+		outFile.printf("Total in CD:           $%10.2f%n" , Bank.getTotCD());
+		outFile.printf("Total in Savings:      $%10.2f%n" , Bank.getTotSav());
+		outFile.printf("Total in Checkings:    $%10.2f%n" , Bank.getTotCh());
+		outFile.printf("Total Amount in Bank:  $%10.2f%n" , Bank.getTotalAmt());
+		//Flushes the output file
 		outFile.flush();
 	}
-
-
-
-
 
 	public static void	closeAccount(Bank bank, PrintWriter outFile, Scanner kybd) {
 		int temp, index;
@@ -273,9 +261,7 @@ public class BankAccountV6 {
 		}
 		outFile.println();
 		outFile.flush();
-
 	}
-
 
 	public static void	reOpenAccount(Bank bank, PrintWriter outFile, Scanner kybd) {
 
@@ -290,7 +276,9 @@ public class BankAccountV6 {
 				newBankAcc.reOpenAcct();//
 				newBankAcc.addTransaction(bank.getAcct(index),
 						"Reopen Account ");
-				bank.setAcct(index, new BankAccount(newBankAcc));//Setting back the copied and mod account
+				//Setting back the copied and mod account
+				bank.setAcct(index, new BankAccount(newBankAcc));
+
 
 				bank.getAcct(index).reOpenAcct();
 			}
@@ -302,7 +290,6 @@ public class BankAccountV6 {
 		}
 		outFile.println();
 		outFile.flush();
-
 	}
 
 	public static void accountInfoPlus(Bank bank, PrintWriter outFile, Scanner kybd) {
@@ -323,40 +310,27 @@ public class BankAccountV6 {
 			temp = bank.findAcctSSN(tempInput);
 			if(temp > -1) {
 
+
 				outFile.println("Transaction Requested: Account Information");
 				outFile.print("Sucessfully found account linked to SS# \"" 
 						+ tempInput+ "\" below:\n\n");
 				outFile.printf("First \t   Last       Social Security# Account#"
 						+ "\t  Account Type   Balance     Status \n \n");
 				outFile.println("/---------------------------------------------"
-						+ "------------------------------------------\\");
+						+ "------------------------------------\\");
 				outFile.printf("%s%n", bank.getAcct((temp)));
 
 
-				//					outFile.printf("%-11s", bank.getAcct((temp)).
-				//							getAccDet().getNameOnAcc()
-				//							.getFirst());
-				//					outFile.printf("%-16s", bank.getAcct(temp).getAccDet().getNameOnAcc()
-				//							.getLast());
-				//					outFile.printf("%-17s", bank.getAcct(temp).getAccDet().getSocSec());
-				//					outFile.printf("%-13s", bank.getAcct(temp).getAccNum());
-				//					outFile.printf("%-14s", bank.getAcct(temp).getAccType());
-				//					outFile.printf("$%7.2f ", bank.getAcct(temp).getAccBal());
-				//					outFile.printf("%8s \n", bank.getAcct(temp).getStatus());
-				//
-				outFile.printf("Transaction History for Account Number " +
-						bank.getAcct(temp).getAccNum() +": \n" );
+				outFile.printf("Transaction History: \n" );
 
 				ArrayList <Transaction> trans = new ArrayList<Transaction>();
 
 				trans = bank.getAcct(temp).getTransactions();
 
 				for(int i = 0; i < bank.getAcct(temp).getNumTrans() ;  i++ ) {	
-					outFile.printf(" %s ", trans.get(i).getTransType());
+					outFile.printf("%-20s ", trans.get(i).getTransType());
 					if ( trans.get(i).getTransAmt() > 0) {
-						outFile.printf( "$%.2f ", trans.get(i).getTransAmt());
-
-
+						outFile.printf( "$%10.2f ", trans.get(i).getTransAmt());
 					}
 					outFile.println();
 				}
@@ -365,12 +339,10 @@ public class BankAccountV6 {
 				BankAccount newBankAcc = bank.getAcct(temp); //making a copy
 				newBankAcc.addTransaction(bank.getAcct(temp),
 						"Account Info Plus ");
-				bank.setAcct(temp, new BankAccount(newBankAcc));//Setting back the copied and mod account
-
-
-
-				outFile.printf(" \n \\-------------------------------------"
-						+ "--------------------------------------------------/");
+				bank.setAcct(temp, new BankAccount(newBankAcc));
+				//Setting back the copied and mod account
+				outFile.printf("\\----------------------------"
+						+ "-----------------------------------------------------/");
 				outFile.flush();
 
 			}
@@ -399,7 +371,6 @@ public class BankAccountV6 {
 		outFile.println();
 		outFile.flush();
 	}
-
 
 
 	//Replaced find account method with bank class method .findAcct
@@ -435,28 +406,19 @@ public class BankAccountV6 {
 				outFile.println("Transaction Requested: Account Information");
 				outFile.print("Sucessfully found account linked to SS# \"" 
 						+ tempInput+ "\" below:\n\n");
-				outFile.printf("First \t   Last\t    Social Security#    Account#"
-						+ "\tAccount Type   Balance \t Status \n");
-				outFile.println("/--------------------------------------------"
-						+ "-------------------------------------------\\");
-				//				outFile.printf("%-11s", bank.getAcct((temp)).
-				//						getAccDet().getNameOnAcc()
-				//						.getFirst());
-				//				outFile.printf("%-16s", bank.getAcct(temp).getAccDet().getNameOnAcc()
-				//						.getLast());
-				//				outFile.printf("%-17s", bank.getAcct(temp).getAccDet().getSocSec());
-				//				outFile.printf("%-13s", bank.getAcct(temp).getAccNum());
-				//				outFile.printf("%-14s", bank.getAcct(temp).getAccType());
-				//				outFile.printf("$%7.2f ", bank.getAcct(temp).getAccBal());
-				//				outFile.printf("%6s \n", bank.getAcct(temp).getStatus());
+				outFile.printf("First \t   Last       Social Security# Account#"
+						+ "\t  Account Type   Balance    Status \n");
+				outFile.println("/---------------------------------------"
+						+ "------------------------------------------\\");
 				outFile.println(bank.getAcct(temp));
-				outFile.printf("\\------------------;-----------------------"
-						+ "----------------------------------------------/");
+				outFile.printf("\\----------------------------"
+						+ "-----------------------------------------------------/");
 
 				BankAccount newBankAcc = bank.getAcct(temp); //making a copy
 				newBankAcc.addTransaction(bank.getAcct(temp),
 						"Account Info  ");
-				bank.setAcct(temp, new BankAccount(newBankAcc));//Setting back the copied and mod account
+				bank.setAcct(temp, new BankAccount(newBankAcc));
+				//Setting back the copied and modified account
 				outFile.flush();
 
 			}
@@ -539,7 +501,8 @@ public class BankAccountV6 {
 					BankAccount newBankAcc = bank.getAcct(index); //making a copy
 					newBankAcc.addTransaction(bank.getAcct(index),
 							"Balance Inquiry");
-					bank.setAcct(index, new BankAccount(newBankAcc));//Setting back the copied and mod account
+					//Setting back the copied and mod account
+					bank.setAcct(index, new BankAccount(newBankAcc));
 
 					outFile.println();
 				}
@@ -634,13 +597,11 @@ public class BankAccountV6 {
 
 							BankAccount newBankAcc = bank.getAcct(index); //making a copy
 
-
-							// Makes the deposit via Bankn object method 
+							// Makes the deposit via Bank object method 
 							newBankAcc.makeDeposit( requestedAccount, index,
 									amountToDeposit);
-
-							bank.setAcct(index, new BankAccount(newBankAcc));//Setting back the copied and mod account
-
+							bank.setAcct(index, new BankAccount(newBankAcc));
+							//Setting back the copied and modified account
 							outFile.printf("New Balance: $%.2f", 
 									bank.getAcct(index).getAccBal());
 							outFile.println();
@@ -684,7 +645,6 @@ public class BankAccountV6 {
 	 * 
 	 * Output: Lists old balance, then new balance successfully withdrawn.
 	 */
-
 	public static void withdrawal(Bank bank, 
 			PrintWriter outFile, Scanner kybd) 
 	{
@@ -761,11 +721,12 @@ public class BankAccountV6 {
 
 
 
-								BankAccount newBankAcc = bank.getAcct(index); //making a copy				
+								BankAccount newBankAcc = bank.getAcct(index); 
+								//making a copy				
 								newBankAcc.makeWithdrawal(bank.getAcct(index).getAccNum()
 										, amountToWithdraw);
-								bank.setAcct(index, new BankAccount(newBankAcc));//Setting back the copied and mod account
-
+								//Setting back the copied and modified account
+								bank.setAcct(index, new BankAccount(newBankAcc));
 								outFile.printf("\nNew Balance: "
 										+ "$%.2f", bank.getAcct(index).getAccBal());
 								outFile.println();
@@ -920,7 +881,6 @@ public class BankAccountV6 {
 						//Making bank object to send to bank.openNewAccount
 						BankAccount bankAcc = new BankAccount( first, last, socSec,
 								accountNum, type, accountBal);
-
 						//Calling open new account
 						bank.openNewAccount(accountNum, bankAcc);	
 						outFile.println("Transaction Requested: Create New Account");
@@ -930,7 +890,6 @@ public class BankAccountV6 {
 								+ "\nwas created and has a "
 								+ "balance of $" );
 						outFile.printf("%.2f \n", bankAcc.getAccBal());
-
 						outFile.flush();
 
 					}
@@ -952,8 +911,6 @@ public class BankAccountV6 {
 			}
 		}
 	}
-
-
 
 	/*
 	 * Method deleteAcct(): 

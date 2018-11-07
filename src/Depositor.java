@@ -12,29 +12,22 @@ public class Depositor {
 		nameOnAcc = new Name();
 		socSec = "none";
 	}
-
+	//Copy Constructor
+	public Depositor (Depositor d) {
+		socSec = d.socSec;
+		nameOnAcc = new Name (d.nameOnAcc);
+	}
 	//Constructor for Depositor object with attributes being passes
 	public Depositor(String first, String last,String soc){
 		nameOnAcc = new Name(first, last);
 		socSec = soc;
 	}
-	
-	
-	//copy Constructor
-	public Depositor (Depositor d) {
-		socSec = d.socSec;
-		nameOnAcc = new Name (d.nameOnAcc);
+
+	public Name getNameOnAcc()
+	{
+		return new Name (nameOnAcc); //Returns copy
 	}
-	
-	public Depositor getCopyDep() {
-		return new Depositor(nameOnAcc.getFirst(),nameOnAcc.getLast(), socSec);
-	}
-	
-	public String toString() {
-		String accString;
-		accString = String.format(nameOnAcc + " %-16s" , socSec );
-		return accString;
-	}
+
 
 
 	//Social security setter
@@ -56,14 +49,18 @@ public class Depositor {
 	{
 		return socSec;
 	}
-	public Name getNameOnAcc()
+
+	//toString method 
+	public String toString() 
 	{
-		return new Name (nameOnAcc);
+		String accString;
+		accString = String.format(nameOnAcc + " %-16s" , socSec );
+		return accString;
 	}
-	
-	public boolean equals (Depositor dep) {
+	public boolean equals (Depositor dep) 
+	{
 		return socSec.equals(dep.socSec);
-}
-	
-	
+	}
+
+
 }
